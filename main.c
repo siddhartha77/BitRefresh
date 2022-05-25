@@ -29,6 +29,9 @@ void main(void) {
     pixMapH = (**mainDeviceH).gdPMap;
     bitDepth = (**pixMapH).pixelSize;
     
+    /* This is all KLUDGE because QEMU doesn't report the bit depth
+       properly when restoring a save state. */
+	
     switch (bitDepth) {
         case 1:
             error = SetDepth(mainDeviceH, 8, nil , nil);

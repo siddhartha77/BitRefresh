@@ -1,5 +1,5 @@
 # BitRefresh
-Refresh the screen in Classic Mac OS.
+FKEY to refresh the screen in Classic Mac OS.
 
 # Installation
 The program is an FKEY. To install:

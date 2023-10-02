@@ -1,67 +1,80 @@
-#include <Dialogs.h>
-#include <Fonts.h>
-#include <MacWindows.h>
-#include <Menus.h>
 #include <QuickDraw.h>
-#include <TextEdit.h>
-
-QDGlobals qd;
-
-static void Initialize(void) {
-	InitGraf(&qd.thePort);
-	InitFonts();
-	InitWindows();
-	InitMenus();
-	TEInit();
-	InitDialogs(nil);
-	InitCursor();
-}
 
 void main(void) {
-    GDHandle          mainDeviceH;
-    PixMapHandle      pixMapH;
-    OSErr             error;
+    GDHandle            mainDeviceH;
+    PixMapHandle        pixMapH;   
+    short               bitDepth;
     
-    short       bitDepth;
-    
-    Initialize();
+    InitGraf(&qd.thePort);
     mainDeviceH = GetMainDevice();
-    pixMapH = (**mainDeviceH).gdPMap;
-    bitDepth = (**pixMapH).pixelSize;
+    pixMapH = (*mainDeviceH)->gdPMap;
+    bitDepth = (*pixMapH)->pixelSize;
     
-    /* This is all KLUDGE because QEMU doesn't report the bit depth
-       properly when restoring a save state. */
-	
     switch (bitDepth) {
         case 1:
-            error = SetDepth(mainDeviceH, 8, nil , nil);
-            error = SetDepth(mainDeviceH, 16, nil , nil); 
-            error = SetDepth(mainDeviceH, 1, nil , nil);
-            break;
+            if (HasDepth(mainDeviceH, 8, NULL, NULL)) {
+                SetDepth(mainDeviceH, 8, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 16, NULL, NULL)) {
+                SetDepth(mainDeviceH, 16, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 1, NULL, NULL)) {
+                SetDepth(mainDeviceH, 1, NULL , NULL);
+            }
         case 2:
-            error = SetDepth(mainDeviceH, 1, nil , nil);
-            error = SetDepth(mainDeviceH, 8, nil , nil); 
-            error = SetDepth(mainDeviceH, 2, nil , nil);
+            if (HasDepth(mainDeviceH, 1, NULL, NULL)) {
+                SetDepth(mainDeviceH, 1, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 8, NULL, NULL)) {
+                SetDepth(mainDeviceH, 8, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 2, NULL, NULL)) {
+                SetDepth(mainDeviceH, 2, NULL , NULL);
+            }
             break;
         case 8:
-            error = SetDepth(mainDeviceH, 1, nil , nil);
-            error = SetDepth(mainDeviceH, 16, nil , nil);     
-            error = SetDepth(mainDeviceH, 8, nil , nil);
+            if (HasDepth(mainDeviceH, 1, NULL, NULL)) {
+                SetDepth(mainDeviceH, 1, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 16, NULL, NULL)) {
+                SetDepth(mainDeviceH, 16, NULL , NULL);
+            }     
+            if (HasDepth(mainDeviceH, 8, NULL, NULL)) {
+                SetDepth(mainDeviceH, 8, NULL , NULL);
+            }
             break;
         case 16:            
-            error = SetDepth(mainDeviceH, 1, nil , nil);     
-            error = SetDepth(mainDeviceH, 8, nil , nil);
-            error = SetDepth(mainDeviceH, 16, nil , nil);
+            if (HasDepth(mainDeviceH, 1, NULL, NULL)) {
+                SetDepth(mainDeviceH, 1, NULL , NULL);
+            }    
+            if (HasDepth(mainDeviceH, 8, NULL, NULL)) {
+                SetDepth(mainDeviceH, 8, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 16, NULL, NULL)) {
+                SetDepth(mainDeviceH, 16, NULL , NULL);
+            }
             break;
         case 32:
-            error = SetDepth(mainDeviceH, 8, nil , nil);     
-            error = SetDepth(mainDeviceH, 16, nil , nil);
-            error = SetDepth(mainDeviceH, 32, nil , nil);
+            if (HasDepth(mainDeviceH, 8, NULL, NULL)) {
+                SetDepth(mainDeviceH, 8, NULL , NULL);
+            }     
+            if (HasDepth(mainDeviceH, 16, NULL, NULL)) {
+                SetDepth(mainDeviceH, 16, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 32, NULL, NULL)) {
+                SetDepth(mainDeviceH, 32, NULL , NULL);
+            }
             break;
         default:
-            error = SetDepth(mainDeviceH, 1, nil , nil);
-            error = SetDepth(mainDeviceH, 16, nil , nil);     
-            error = SetDepth(mainDeviceH, 8, nil , nil);
+            if (HasDepth(mainDeviceH, 1, NULL, NULL)) {
+                SetDepth(mainDeviceH, 1, NULL , NULL);
+            }
+            if (HasDepth(mainDeviceH, 16, NULL, NULL)) {
+                SetDepth(mainDeviceH, 16, NULL , NULL);
+            }     
+            if (HasDepth(mainDeviceH, 8, NULL, NULL)) {
+                SetDepth(mainDeviceH, 8, NULL , NULL);
+            }
             break;
     }       
 }

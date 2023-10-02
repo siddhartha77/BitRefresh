@@ -1,9 +1,11 @@
 #include <QuickDraw.h>
 
+QDGlobals qd;
+
 void main(void) {
     GDHandle            mainDeviceH;
-    PixMapHandle        pixMapH;   
-    short               bitDepth;
+    PixMapHandle        pixMapH;
+    short               bitDepth;   
     
     InitGraf(&qd.thePort);
     mainDeviceH = GetMainDevice();
